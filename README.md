@@ -1,6 +1,6 @@
-# TaylorVar: A tiny high-order forward popagation automatic differentiation tool in PyTorch
+# TaylorVar: A tiny high-order forward propagation automatic differentiation tool in PyTorch
 
-TaylorVar is a lightweight PyTorch wrapper aimed at providing explicit construction of computational graphs for Taylor-mode automatic differentiation, enabling the computation of higher-order derivatives in a single forward pass without stacked first-order AD as in original Pytorch. It is designed for tasks that require accurate higher-order derivatives (up to 3), such as in Physics-Informed Neural Networks (PINNs), scientific computing, and differential equation solvers.
+TaylorVar is a lightweight PyTorch wrapper aimed at providing explicit construction of computational graphs for Taylor-mode automatic differentiation, enabling the computation of higher-order derivatives in a single forward pass without stacked first-order AD as in original PyTorch. It is designed for tasks that require accurate higher-order derivatives (up to 3), such as in Physics-Informed Neural Networks (PINNs), scientific computing, and differential equation solvers.
 
 
 ## Features
@@ -13,36 +13,10 @@ TaylorVar is a lightweight PyTorch wrapper aimed at providing explicit construct
     - Linear layer (`matmul`)
     - Element-wise non-linear functions (use pre-built or custom activation functions)
     - Indexing and slicing
-    - Other operations(`reshape`, `view`, `flatten`, `squeeze`, `unsqueeze`,`cat`, `stack`)
-- Compatible with PyTorch functional usage.
+    - Other operations(`reshape`, `view`, `flatten`, `squeeze`, `unsqueeze`, `cat`, `stack`)
+- Compatible with PyTorch functional API.
 
 
-## An mathematic intuition 
-Let's consider the MLPs consisting of fully-connected and element-wise activation layers for example. To evaluate first-and second-order partial derivatives of the form $\partial_{x_i} u, \partial^2_{x_i,x_j} u$ for $i, j = 1,\ldots,d$. At the first layer, set $z^{(0)} = x \in \mathbb{R}^d, \partial_{x_i}z^{(0)} = e_i \in \mathbb{R}^d$, i.e., the i-th basis vector and $\partial^2_{x_i,x_j}z^{(0)} = 0 \in \mathbb{R}^d$.
-
-For linear layer
-$f_{\theta(l)}(z^{(l-1)}) = W^{(l)}z^{(l-1)}$，by applying the chain-rule propagation, we have following results:
-
-$$
-z^{(l)} = W^{(l)}z^{(l-1)} \in \mathbb{R}^{h^{(l)}} \tag{1a}
-$$
-$$
-\partial_{x_i}z^{(l)} = W^{(l)}\partial_{x_i}z^{(l-1)} \in \mathbb{R}^{h^{(l)}} \tag{1b}
-$$
-$$
-\partial^2_{x_i,x_j}z^{(l)} = W^{(l)}\partial^2_{x_i,x_j}z^{(l-1)} \in \mathbb{R}^{h^{(l)}}  \tag{1c}
-$$
-
-Similarly, the forward propagation rules for element-wise non-linear activation $z^{(l-1)} \mapsto \sigma(z^{(l-1)})$ are: 
-$$
-z^{(l)} = \sigma(z^{(l-1)}) \in \mathbb{R}^{h^{(l)}}  \tag{2a}
-$$
-$$
-\partial_{x_i}z^{(l)} = \sigma'(z^{(l-1)}) \odot \partial_{x_i}z^{(l-1)} \in \mathbb{R}^{h^{(l)}}  \tag{2b}
-$$
-$$
-\partial^2_{x_i,x_j}z^{(l)} = \partial_{x_i}z^{(l-1)} \odot \sigma''(z^{(l-1)}) \odot \partial_{x_j}z^{(l-1)} + \sigma'(z^{(l-1)}) \odot \partial^2_{x_i,x_j}z^{(l-1)} \in \mathbb{R}^{h^{(l)}}  \tag{2c}
-$$
 ## Installation
 ```bash
 git clone https://github.com/fhl2000/TaylorVar.git
@@ -170,7 +144,7 @@ optimizer.step()
 
 ## Contribution
 
-This project is still on a early alpha stage, and we welcome contributions! Please submit issues or pull requests if you have suggestions or improvements.
+This project is still on an early alpha stage, and we welcome contributions! Please submit issues or pull requests if you have suggestions or improvements.
 
 ## License
 
