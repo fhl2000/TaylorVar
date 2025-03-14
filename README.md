@@ -155,7 +155,7 @@ MIT License
 If you find this project useful and use it in your research, please cite:
 
 ```
-@software{taylorvar2025,
+@misc{taylorvar2025,
   author = {Haolong Fan},
   title = {TaylorVar: A Tiny High-Order Forward Propagation Automatic Differentiation Tool in PyTorch},
   year = {2025},
